@@ -11,4 +11,3 @@ export default function KambazLayout({ children }: Readonly<{ children: ReactNod
      </tbody>
    </table>
 );}
-

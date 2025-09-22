@@ -18,13 +18,31 @@ export default function AssignmentEditor() {
               <input id="wd-points" defaultValue={100} />
             </td>
           </tr>
+
+          <tr>
+            <td align="right">
+              <label htmlFor="wd-group">Assignment Group</label>
+            </td>
+            <td>
+              <select id="wd-group" defaultValue="ASSIGNMENTS">
+                <option>ASSIGNMENTS</option>
+                <option>QUIZZES</option>
+                <option>EXAMS</option>
+                <option>PROJECT</option>
+              </select>
+            </td>
+          </tr>
+
+
           <tr>
             <td align="right" valign="top">
               <label htmlFor="wd-display-grade-as">Display Grade As</label>
             </td>
             <td>
               <select id="wd-display-grade-as" defaultValue="Percentage">
-               <option value="Percentage">Percentage</option>
+               <option>Percentage</option>
+                <option>Marks</option>
+                <option>Grades</option>
                </select>
             </td>
           </tr>
