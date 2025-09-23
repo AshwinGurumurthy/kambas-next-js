@@ -22,9 +22,28 @@ export default function Modules() {
         </li>
         <li className="wd-module">
           <div className="wd-title">Week 2</div>
+          <ul className="wd-lessons">
+            <li className="wd-lesson">
+              <span className="wd-title">Introduction to HTML</span>
+              <ul className="wd-content">
+                <li className="wd-content-item">HTML syntax</li>
+                <li className="wd-content-item">HTML and its tags </li>
+                <li className="wd-content-item">Building your first website</li>
+              </ul>
+            </li>
+          </ul>
         </li>
         <li className="wd-module">
           <div className="wd-title">Week 3</div>
+          <ul className="wd-lessons">
+            <li className="wd-lesson">
+              <span className="wd-title">Styling with CSS</span>
+              <ul className="wd-content">
+                <li className="wd-content-item">Syntax</li>
+                <li className="wd-content-item">Other useful features associated with CSS</li>
+              </ul>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
