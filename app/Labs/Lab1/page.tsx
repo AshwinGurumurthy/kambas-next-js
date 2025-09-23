@@ -3,6 +3,7 @@ export default function Lab1() {
   return (
     <div id="wd-lab1">
       <h2>Lab 1</h2>
+      <h2>Ashwin Gurumurthy section 04</h2>
       <h3>HTML Examples</h3>
       <div id="wd-h-tag">
         <h4>Heading Tags</h4>
@@ -264,8 +265,7 @@ to get dummy text<br/>
 
 <h4>Anchor tag</h4>
 Github repsitory:
-{/* Please replace the URL with your repository URL */}
-<a href="https://www.github.com/complete-this-repo" id="wd-github">click here</a>
+<a href="https://github.com/AshwinGurumurthy/kambas-next-js" id="wd-github">click here</a>
 to get dummy text<br/>
 
 
