@@ -265,8 +265,7 @@ to get dummy text<br/>
 
 <h4>Anchor tag</h4>
 Github repsitory:
-<a href="https://github.com/AshwinGurumurthy/kambas-next-js" id="wd-github">click here</a>
-to get dummy text<br/>
+<a href="https://github.com/AshwinGurumurthy/kambas-next-js" id="wd-github"> click here</a><br/>
 
 
     </div>
