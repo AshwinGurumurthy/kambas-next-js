@@ -60,7 +60,7 @@ My favorite books (in no particular order)
 Your favorite books (in no particular order)
 <ul id="wd-your-books">
   <li>Digital Fortress</li>
-  <li>Harry Potter and the Sorcerer's stone</li>
+  <li>Harry Potter and the Sorcerer stone</li>
   <li>The Hobbit</li>
   <li>The Alchemist</li>
   <li>The Da Vinci Code</li>
