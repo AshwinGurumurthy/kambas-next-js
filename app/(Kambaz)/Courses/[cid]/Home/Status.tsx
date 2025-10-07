@@ -1,9 +1,11 @@
 import { MdDoNotDisturbAlt } from "react-icons/md";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaCheckCircle, FaHome } from "react-icons/fa";
 import { BiImport } from "react-icons/bi";
 import { LiaFileImportSolid } from "react-icons/lia";
 import { Button } from "react-bootstrap";
-{/* Find more icons */}
+import { LuSignal } from "react-icons/lu";
+import { HiSpeakerphone } from "react-icons/hi";
+import { IoIosNotifications } from "react-icons/io";
 export default function CourseStatus() {
  return (
    <div id="wd-course-status" style={{ width: "350px" }}>
@@ -22,15 +24,15 @@ export default function CourseStatus() {
      <Button variant="secondary" size="lg" className="w-100 mt-1 text-start">
        <LiaFileImportSolid className="me-2 fs-5" /> Import from Commons </Button>
       <Button variant="secondary" size="lg" className="w-100 mt-1 text-start">
-        <FaCheckCircle className="me-2 fs-5" /> Choose Home Page </Button>
+      <FaHome className="me-2 fs-5"/> Choose Home Page </Button>
       <Button variant="secondary" size="lg" className="w-100 mt-1 text-start">
-        <FaCheckCircle className="me-2 fs-5" /> View Course Stream </Button>
+      <LuSignal className="me-2 fs-5"/>View Course Stream </Button>
       <Button variant="secondary" size="lg" className="w-100 mt-1 text-start">
-        <FaCheckCircle className="me-2 fs-5" /> New Announcement </Button>
+        <HiSpeakerphone className="me-2 fs-5" /> New Announcement </Button>
       <Button variant="secondary" size="lg" className="w-100 mt-1 text-start">
-        <FaCheckCircle className="me-2 fs-5" /> New Analytics </Button>
+        <LuSignal className="me-2 fs-5"/> New Analytics </Button>
       <Button variant="secondary" size="lg" className="w-100 mt-1 text-start">
-        <FaCheckCircle className="me-2 fs-5" /> View Course Notifications </Button>
+        <IoIosNotifications className="me-2 fs-5"/> View Course Notifications </Button>
    </div> );}
 
 

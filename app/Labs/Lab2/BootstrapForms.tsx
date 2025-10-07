@@ -63,13 +63,13 @@ export default function BootstrapForms() {
            <FormControl type="email" defaultValue="email@example.com" />
        </Col>
    </Row>
-   <Row className="mb-3" controlId="password1">
+   <Row className="mb-3" controlid="password1">
        <FormLabel column sm={2}> Password </FormLabel>
        <Col sm={10}>
            <FormControl type="password" />
        </Col>
    </Row>
-   <Row className="mb-3" controlId="textarea2">
+   <Row className="mb-3" controlid="textarea2">
        <FormLabel column sm={2}> Bio </FormLabel>
        <Col sm={10}>
            <FormControl as="textarea" style={{ height: "100px" }} />
