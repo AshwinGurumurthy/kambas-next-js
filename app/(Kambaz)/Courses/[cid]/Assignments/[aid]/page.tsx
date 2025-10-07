@@ -84,7 +84,7 @@ The Kanbas application should include a link to navigate back to the landing pag
       <FormGroup className="align-items-center p-3 pb-4 pt-0">
       <FormLabel column sm={4}>Online entry options</FormLabel>
       <FormCheck type="checkbox" label="Text Entry" defaultChecked name="wd-text-entry" id="wd-text-entry"/>
-      <FormCheck type="checkbox" label="Webite URL" name="wd-website-url" id="wd-website-url"/>
+      <FormCheck type="checkbox" label="Website URL" name="wd-website-url" id="wd-website-url"/>
       <FormCheck type="checkbox" label="Media Recordings" name="wd-media-recordings" id="wd-media-recordings"/>
       <FormCheck type="checkbox" label="Student Annotation" name="wd-radio-student-annotation" id="wd-student-annotation"/>
       <FormCheck type="checkbox" label="File Uploads" name="wd-radio-file-upload" id="wd-file-upload"/>
