@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { Badge, Button, FormControl, InputGroup, ListGroup, ListGroupItem } from "react-bootstrap";
 import { BsGripVertical, BsThreeDotsVertical } from "react-icons/bs";
@@ -6,8 +7,12 @@ import { FaCheckCircle, FaEllipsisV } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { LuNotebookPen } from "react-icons/lu";
+import * as db from "../../../Database";
+import { useParams } from "next/navigation";
 
 export default function Assignments() {
+  const { cid } = useParams();
+  const assignments = db.assignments;
   return (
     <div id="wd-assignments">
       <div className="d-flex align-items-center">
@@ -41,17 +46,21 @@ export default function Assignments() {
           40% of Total
         </Badge>
         </div>
-        
-        <ListGroupItem className="wd-assignment-status-border p-2">
+        <ListGroupItem />
+
+        {assignments.filter((assignment: any) => assignment.course === cid)
+        .map((assignment: any) => (
+
+        <ListGroupItem key ={assignment._id} className="wd-assignment-status-border p-2">
           <div className="d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center">
               <BsGripVertical className="fs-4" />
               <LuNotebookPen className="text-success me-3 fs-4" />
               <div>
               <Link
-                  href="/Courses/1234/Assignments/123"
+                  href={`/Courses/${cid}/Assignments/${assignment._id}`}
                   className="wd-assignment-link text-decoration-none text-dark fw-bold">
-                  <h5 className="mb-0">A1</h5>
+                  <h5 className="mb-0">{assignment.title}</h5>
               </Link>
               <div>
               <span className = "text-danger">Multiple Modules </span>| <span className = "text-muted fw-bold">Not available until </span> May 6 at 12:00am |
@@ -69,62 +78,9 @@ export default function Assignments() {
         </div>
         </ListGroupItem>
 
-        <ListGroupItem className="wd-assignment-status-border p-2">
-          <div className="d-flex align-items-center justify-content-between">
-            <div className="d-flex align-items-center">
-              <BsGripVertical className="fs-4" />
-              <LuNotebookPen className="text-success me-3 fs-4" />
-              <div>
-              <Link
-                  href="/Courses/1234/Assignments/123"
-                  className="wd-assignment-link text-decoration-none text-dark fw-bold">
-                  <h5 className="mb-0">A2</h5>
-              </Link>
-              <div>
-              <span className = "text-danger">Multiple Modules </span>| <span className = "text-muted fw-bold">Not available until </span> May 13 at 12:00am |
-              </div>
-              <div>
-                <span className="fw-bold">Due </span> May 13 at 11:59pm | 100 pts
-              </div>
-            </div>
-            
-            </div>
-              <div className="d-flex align-items-center ms-3">
-          <FaCheckCircle className="text-success me-3 fs-4" />
-          <BsThreeDotsVertical className="text-muted me-3 fs-4" />
-        </div>
-        </div>
-        </ListGroupItem>
-
-        <ListGroupItem className="wd-assignment-status-border p-2">
-          <div className="d-flex align-items-center justify-content-between">
-            <div className="d-flex align-items-center">
-              <BsGripVertical className="fs-4" />
-              <LuNotebookPen className="text-success me-3 fs-4" />
-              <div>
-              <Link
-                  href="/Courses/1234/Assignments/123"
-                  className="wd-assignment-link text-decoration-none text-dark fw-bold">
-                  <h5 className="mb-0">A3</h5>
-              </Link>
-              <div>
-              <span className = "text-danger">Multiple Modules </span>| <span className = "text-muted fw-bold">Not available until </span> May 20 at 12:00am |
-              </div>
-              <div>
-                <span className="fw-bold">Due </span> May 27 at 11:59pm | 100 pts
-              </div>
-            </div>
-            
-            </div>
-              <div className="d-flex align-items-center ms-3">
-          <FaCheckCircle className="text-success me-3 fs-4" />
-          <BsThreeDotsVertical className="text-muted me-3 fs-4" />
-        </div>
-        </div>
-        </ListGroupItem>
-
+        ))}
     </ListGroupItem>
-
+    
     
     </ListGroup>
     </div>
