@@ -17,19 +17,19 @@ export default function KambazNavigation() {
     
   ];
   return (
-    <ListGroup id="wd-kambaz-navigation" style={{width: 120}}
-         className="rounded-0 position-fixed bottom-0 top-0 d-none d-md-block bg-black z-2">
-      <ListGroupItem id="wd-neu-link" target="_blank" href="https://www.northeastern.edu/"
-        action className="bg-black border-0 text-center">
-        <img src="/images/NEU.png" width="75px" /></ListGroupItem>
-      <ListGroupItem as={Link} href="/Account"
-        className={`text-center border-0 bg-black
-            ${pathname.includes("Account") ? "bg-white text-danger" : "bg-black text-white"}`}>
-        <FaRegCircleUser
-          className={`fs-1 ${pathname.includes("Account") ? "text-danger" : "text-white"}`} />
-        <br />
-        Account
-      </ListGroupItem>
+    <ListGroup className="rounded-0 position-fixed bottom-0 top-0 d-none d-md-block bg-black z-2" style={{ width: 120 }}
+              id="wd-kambaz-navigation">
+      <ListGroupItem className="bg-black border-0 text-center" as="a"
+              target="_blank" href="https://www.northeastern.edu/" id="wd-neu-link">
+       <img src="/images/neu.jpg" width="75px" alt="Northeastern University" />
+     </ListGroupItem>
+      <ListGroupItem className="border-0 bg-black text-center">
+       <Link href="/Account" id="wd-account-link" className="text-white text-decoration-none">
+         <FaRegCircleUser className="fs-1 text-white" />
+         <br />
+         Account
+       </Link>
+     </ListGroupItem>
       {links.map((link) => (
         <ListGroupItem key={link.path} as={Link} href={link.path}
           className={`bg-black text-center border-0
