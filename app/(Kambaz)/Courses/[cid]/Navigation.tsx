@@ -10,10 +10,10 @@ export default function CourseNavigation({ cid }: { cid: string }) {
     <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
       {links.map((link, index) => (
         <Link
-          key={`${cid}-${link}-${index}`}  
+          key={`${cid}-${index}`}  
           href={link === "People" ? `/Courses/${cid}/People/Table` : `/Courses/${cid}/${link}`}
           className={`list-group-item ${
-            path.startsWith(`/Courses/${cid}/${link}`) ? "active border-0" : "text-danger border-0"
+            path.includes(`/Courses/${cid}/${link}`) ? "active border-0" : "text-danger border-0"
           }`}
         >
           {link}
