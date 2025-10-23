@@ -222,7 +222,7 @@ Your favorite books (in no particular order)
 <select id="wd-select-one-genre">
    <option value="COMEDY">Comedy</option>
    <option value="DRAMA">Drama</option>
-   <option selected value="SCIFI">
+   <option  defaultValue="SCIFI">
        Science Fiction</option>
    <option value="FANTASY">Fantasy</option>
 </select>
