@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const assignment = db.assignments.find(a => aid === a._id)
-  
+
   return (
     <div id="wd-assignments-editor m-4">
       <Form>
@@ -125,7 +125,7 @@ export default function AssignmentEditor() {
                 <FormLabel column sm={2}>
                   Available from
                 </FormLabel>
-                <FormControl type="date" className="me-5" defaultValue={assignment?.availDate || ""}/>
+                <FormControl type="date" className="me-5" defaultValue={assignment?.availFrom || ""}/>
                 <FormLabel column sm={1} className="">
                   Until
                 </FormLabel>

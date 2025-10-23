@@ -63,10 +63,10 @@ export default function Assignments() {
                   <h5 className="mb-0">{assignment.title}</h5>
               </Link>
               <div>
-              <span className = "text-danger">Multiple Modules </span>| <span className = "text-muted fw-bold">Not available until </span> May 6 at 12:00am |
+              <span className = "text-danger">Multiple Modules </span>| <span className = "text-muted fw-bold">Not available until </span> {assignment.availFrom} at {assignment.availFromTime} |
               </div>
               <div>
-                <span className="fw-bold">Due </span> May 13 at 11:59pm | 100 pts
+                <span className="fw-bold">Due </span> {assignment.dueDate} at {assignment.dueTime} | {assignment.points} pts
               </div>
             </div>
             
