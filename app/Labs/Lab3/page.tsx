@@ -30,7 +30,6 @@ import House from "./House";
 import Spreading from "./Spreader";
 import Destructing from "./Destructing";
 import FunctionDestructing from "./FunctionDestructing";
-import Math from "./Math";
 import DestructingImports from "./DestructingInports";
 export default function Lab3() {
   console.log('Hello World!');
