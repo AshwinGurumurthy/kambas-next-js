@@ -48,8 +48,8 @@ export default function Assignments() {
         </div>
         <ListGroupItem />
 
-        {assignments.filter((assignment: any) => assignment.course === cid)
-        .map((assignment: any) => (
+        {assignments.filter((assignment) => assignment.course === cid)
+        .map((assignment) => (
 
         <ListGroupItem key ={assignment._id} className="wd-assignment-status-border p-2">
           <div className="d-flex align-items-center justify-content-between">
