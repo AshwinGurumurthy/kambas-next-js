@@ -3,7 +3,7 @@ import { FormControl } from "react-bootstrap";
 export default function Signup() {
   return (
     <div id="wd-signup-screen">
-      <h2>Sign up</h2>
+      <h1>Sign up</h1>
       <FormControl id="wd-username"
              placeholder="username"
              className="mb-2"/>

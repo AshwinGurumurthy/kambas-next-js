@@ -1,18 +1,35 @@
 "use client";
 import Link from "next/link";
-import { Badge, Button, FormControl, InputGroup, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Badge, Button, FormControl, InputGroup, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
 import { BsGripVertical, BsThreeDotsVertical } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 import { FaCheckCircle, FaEllipsisV } from "react-icons/fa";
-import { FaPlus } from "react-icons/fa6";
+import { FaPlus, FaTrash } from "react-icons/fa6";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { LuNotebookPen } from "react-icons/lu";
 import * as db from "../../../Database";
 import { useParams } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import { deleteAssignment } from "./reducer";
+import { useState } from "react";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments;
+  const assignments = useSelector((state: RootState) => state.assignmentsReducer.assignments);
+  const {currentUser}  = useSelector((state: RootState) => state.accountReducer);
+  const isFaculty = currentUser?.role === "FACULTY";
+  const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
+  const [selectedAssignment, setSelectedAssignment] = useState(null);
+
+  const handleDelete = (assignment:any) => {
+  if (window.confirm(`Are you sure you want to delete "${assignment.title}"?`)) {
+      dispatch(deleteAssignment(assignment._id));
+    }
+};
+
+  
   return (
     <div id="wd-assignments">
       <div className="d-flex align-items-center">
@@ -26,13 +43,20 @@ export default function Assignments() {
       className="border-start-0 shadow-none"
     />
   </InputGroup>
+  {isFaculty && (
       <div className="d-flex float-end ms-auto">
       <Button variant="light" size="lg" className="d-flex align-items-center" id="wd-add-assignment-group">
-       <FaPlus className="me-2" /> Group </Button>
+       <FaPlus className="me-2 pe-2" /> Group </Button>
 
-       <Button variant="danger" size="lg" className="d-flex align-items-center" id="wd-add-assignment">
-       <FaPlus className="me-2" /> Assignment </Button>
-      </div>
+       
+        <Link href={`/Courses/${cid}/Assignments/NewAssignment`}
+                  className="wd-assignment-link text-decoration-none text-dark fw-bold">
+        <Button variant="danger" size="lg" className="d-flex align-items-center" id="wd-add-assignment">
+          <FaPlus className="me-2" /> Assignment </Button> 
+        </Link>
+       
+      </div> )}
+      
        </div>
 
        <ListGroup className="rounded-0" id="wd-assignments">
@@ -57,11 +81,16 @@ export default function Assignments() {
               <BsGripVertical className="fs-4" />
               <LuNotebookPen className="text-success me-3 fs-4" />
               <div>
+                {isFaculty ? (
               <Link
                   href={`/Courses/${cid}/Assignments/${assignment._id}`}
                   className="wd-assignment-link text-decoration-none text-dark fw-bold">
                   <h5 className="mb-0">{assignment.title}</h5>
               </Link>
+                ) :
+                ( <h5 className="mb-0">{assignment.title}</h5>
+                )}
+                
               <div>
               <span className = "text-danger">Multiple Modules </span>| <span className = "text-muted fw-bold">Not available until </span> {assignment.availFrom} at {assignment.availFromTime} |
               </div>
@@ -72,6 +101,7 @@ export default function Assignments() {
             
             </div>
               <div className="d-flex align-items-center ms-3">
+          <FaTrash className="text-danger me-4 fs-4" onClick={() => handleDelete(assignment)}/>   
           <FaCheckCircle className="text-success me-3 fs-4" />
           <BsThreeDotsVertical className="text-muted me-3 fs-4" />
         </div>

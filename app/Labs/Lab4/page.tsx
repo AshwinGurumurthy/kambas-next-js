@@ -9,6 +9,9 @@ import PassingFunctions from "./PassingFunctions";
 import ReduxExamples from "./ReduxExamples";
 import store from "./store";
 import { Provider } from "react-redux";
+import StringStateVariables from "./StringStateVariables";
+import ObjectStateVariable from "./ObjectStateVariable";
+import ArrayStateVariable from "./ArrayStateVariable";
 
 export default function Lab4() {
     function sayHello() {
@@ -24,9 +27,13 @@ export default function Lab4() {
         <ClickEvent />
         <PassingDataOnEvent/>
       <PassingFunctions theFunction={sayHello} />
+      <ClickEvent />
       <Counter />
       <BooleanStateVariables />
+      <StringStateVariables />
       <DateStateVariable />
+      <ObjectStateVariable />
+      <ArrayStateVariable />
     <ParentStateComponent />
         <ReduxExamples/>
       </div>

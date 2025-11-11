@@ -30,4 +30,5 @@
   { "_id": "A801", "title": "History of Alliances Report", "description": "Research and analyze a major alliance in Middle-earth and evaluate its diplomatic significance.", "course": "RS108", "points": 100, "availFrom": "2024-05-06","availFromTime": "12:00am",  "dueDate": "2024-05-13", "dueTime": "23:59pm" },
   { "_id": "A802", "title": "Diplomatic Negotiation Simulation", "description": "Participate in a role-play simulation to negotiate peace between two factions.", "course": "RS108", "points": 100, "availFrom": "2024-05-13","availFromTime": "12:00am",  "dueDate": "2024-05-20", "dueTime": "23:59pm" },
   { "_id": "A803", "title": "Modern Diplomacy Reflection", "description": "Write a reflection connecting Middle-earth diplomacy strategies to modern international relations.", "course": "RS108", "points": 100, "availFrom": "2024-05-20","availFromTime": "12:00am",  "dueDate": "2024-05-27", "dueTime": "23:59pm" }
+
 ]
