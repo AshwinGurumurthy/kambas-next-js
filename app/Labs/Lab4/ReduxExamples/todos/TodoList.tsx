@@ -9,12 +9,12 @@ export default function TodoList() {
   return (
     <div id="wd-todo-list-redux">
       <h2>Todo List</h2>
-      <ListGroup>
         <TodoForm />
-        {todos.map((todo: any) => (
-          <TodoItem key={todo.id} todo={todo} />
-        ))}
-      </ListGroup>
+<ListGroup className="mt-3">
+  {todos.map((todo: any) => (
+    <TodoItem key={todo.id} todo={todo} />
+  ))}
+</ListGroup>
       <hr/>
     </div>
 );}

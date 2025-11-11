@@ -9,14 +9,15 @@ export default function TodoForm(
   const { todo } = useSelector((state: RootState) => state.todosReducer);
   const dispatch = useDispatch();
   return (
-    <ListGroupItem>
+    <ListGroupItem className="d-flex align-items-center gap-2 p-3  border rounded">
       <FormControl
         defaultValue={todo.title}
         onChange={(e) => dispatch(setTodo({ ...todo, title: e.target.value }))}/>
+        <Button onClick={() => dispatch(updateTodo(todo))}
+              id="wd-update-todo-click" className="btn btn-warning text-dark"> Update </Button>
         <Button onClick={() => dispatch(addTodo(todo))}
-              id="wd-add-todo-click"> Add </Button>
-      <Button onClick={() => dispatch(updateTodo(todo))}
-              id="wd-update-todo-click"> Update </Button>
+              id="wd-add-todo-click" className="btn btn-success text-light"> Add </Button>
+      
     </ListGroupItem>
 );}
 

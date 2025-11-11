@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { Button, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { RootState } from "./store";
 export default function ArrayStateVariable() {
@@ -14,8 +14,15 @@ const deleteElement = (index: number) => {
  return (
   <div id="wd-array-state-variables">
    <h2>Array State Variable</h2>
-   <button onClick={addElement}>Add Element</button>
+   <Button className="btn btn-success mb-2" onClick={addElement}>Add Element</Button>
    <ListGroup>
+    {array.map((item, index) => (
+     <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center"> {item} 
+      <Button onClick={() => deleteElement(index)} className="btn btn-danger btn-sm ms-2">
+       Delete</Button>
+     </ListGroup.Item>))}
+   </ListGroup><hr/>
+   <ListGroup className="d-flex flex-column gap-2">
         {todos.map((todo: any) => (
           <ListGroupItem key={todo.id}>
             {todo.title}
@@ -23,11 +30,5 @@ const deleteElement = (index: number) => {
         ))}
       </ListGroup>
       <hr />
-   <ul>
-    {array.map((item, index) => (
-     <li key={index}> {item}
-      <button onClick={() => deleteElement(index)}>
-       Delete</button>
-     </li>))}
-   </ul><hr/></div>);}
+   </div>);}
 

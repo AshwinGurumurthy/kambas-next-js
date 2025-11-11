@@ -8,12 +8,16 @@ export default function TodoItem( { todo }: { todo: { id: string; title: string 
     ) {
   const dispatch = useDispatch();
   return (
-    <ListGroupItem key={todo.id}>
-      <Button onClick={() => dispatch(deleteTodo(todo.id))}
-              id="wd-delete-todo-click"> Delete </Button>
-      <Button onClick={() => dispatch(setTodo(todo))}
-              id="wd-set-todo-click"> Edit </Button>
+    <ListGroupItem key={todo.id} className="d-flex justify-content-between align-items-center">
       {todo.title}
+      <div className="ms-auto d-flex gap-2">
+       <Button onClick={() => dispatch(setTodo(todo))}
+              id="wd-set-todo-click"  className="btn btn-primary" > Edit </Button>
+      <Button onClick={() => dispatch(deleteTodo(todo.id))}
+              id="wd-delete-todo-click" className="btn btn-danger"> Delete </Button>
+      </div>
+     
+      
     </ListGroupItem>
 );}
 
