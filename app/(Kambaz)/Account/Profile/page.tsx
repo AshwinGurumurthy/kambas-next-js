@@ -7,7 +7,7 @@ import { RootState } from "../../store";
 import { Button, FormControl } from "react-bootstrap";
 
 export default function Profile() {
- const [profile, setProfile] = useState<any>({});
+ const [profile, setProfile] = useState<typeof currentUser>({});
  const dispatch = useDispatch();
  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
  const fetchProfile = () => {
