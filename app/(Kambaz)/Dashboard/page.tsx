@@ -8,7 +8,6 @@ import { RootState } from "../store";
 import { addEnrollment, deleteEnrollment } from "./Enrollments/reducer";
 
 export default function Dashboard() {
-  //const [courses, setCourses] = useState<any[]>(db.courses);
   const [course, setCourse] = useState<any>({
     _id: "0", name: "New Course", number: "New Number",
     startDate: "2023-09-10", endDate: "2023-12-15",
@@ -22,8 +21,6 @@ export default function Dashboard() {
   const [showGo,toggleShowGo] = useState(true);
   const dispatch = useDispatch();
 
-
-
   const handleEnroll = (courseId: string) => dispatch(addEnrollment({ userId: currentUser._id, courseId }));
   const handleUnenroll = (courseId: string) => dispatch(deleteEnrollment({ userId: currentUser._id, courseId }));
 
@@ -33,17 +30,39 @@ export default function Dashboard() {
 
   return (
     <div id="wd-dashboard">
-      <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
-      
-      <h5>New Course </h5>
-      <button className="btn btn-primary float-end me-2" onClick={() => setShowAll(!showAll)} id="wd-update-course-click">
-          Enrollments </button>
-       <button className="btn btn-primary float-end me-2"
-                  id="wd-add-new-course-click"
-                 onClick={() => dispatch(addNewCourse(course))}> Add </button>
-        <button className="btn btn-warning float-end me-2"
-                onClick={() => dispatch(updateCourse(course))} id="wd-update-course-click">
-          Update </button>
+  <h1 id="wd-dashboard-title">Dashboard</h1>
+  <hr />
+
+  <div className="d-flex justify-content-between align-items-center p-1">
+    <h5>New Course</h5>
+
+    <div className="d-flex gap-2">
+      <button
+        className="btn btn-primary"
+        id="wd-enrollments-click"
+        onClick={() => setShowAll(!showAll)}
+      >
+        Enrollments
+      </button>
+
+      <button
+        className="btn btn-primary"
+        id="wd-add-new-course-click"
+        onClick={() => dispatch(addNewCourse(course))}
+      >
+        Add
+      </button>
+
+      <button
+        className="btn btn-warning"
+        id="wd-update-course-click"
+        onClick={() => dispatch(updateCourse(course))}
+      >
+        Update
+      </button>
+    </div>
+  </div>
+
          
 
 
