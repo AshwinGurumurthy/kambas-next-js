@@ -1,18 +1,16 @@
 "use client";
 import Link from "next/link";
-import { Badge, Button, FormControl, InputGroup, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
+import { Badge, Button, FormControl, InputGroup, ListGroup, ListGroupItem } from "react-bootstrap";
 import { BsGripVertical, BsThreeDotsVertical } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
-import { FaCheckCircle, FaEllipsisV } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
 import { FaPlus, FaTrash } from "react-icons/fa6";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { LuNotebookPen } from "react-icons/lu";
-import * as db from "../../../Database";
 import { useParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { deleteAssignment } from "./reducer";
-import { useState } from "react";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -20,8 +18,6 @@ export default function Assignments() {
   const {currentUser}  = useSelector((state: RootState) => state.accountReducer);
   const isFaculty = currentUser?.role === "FACULTY";
   const dispatch = useDispatch();
-  const [showModal, setShowModal] = useState(false);
-  const [selectedAssignment, setSelectedAssignment] = useState(null);
 
   const handleDelete = (assignment:any) => {
   if (window.confirm(`Are you sure you want to delete "${assignment.title}"?`)) {

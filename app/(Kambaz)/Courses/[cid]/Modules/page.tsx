@@ -1,13 +1,11 @@
 "use client"
 import { useParams } from "next/navigation";
-import * as db from "../../../Database";
 import { FormControl, ListGroup, ListGroupItem } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
 import LessonControlButtons from "./LessonControlButtons";
 import ModulesControls from "./ModulesControls";
 import ModuleControlButtons from "./ModuleControlButtons";
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { addModule, editModule, updateModule, deleteModule }
   from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,27 +13,10 @@ import { RootState } from "../../../store";
 
 export default function Modules() {
   const { cid } = useParams();
-  //const modules = db.modules;
 
   const [moduleName, setModuleName] = useState("");
   const { modules } = useSelector((state: RootState) => state.modulesReducer);
   const dispatch = useDispatch();
-
-  /*const addModule = () => {
-    setModules([ ...modules, { _id: uuidv4(), name: moduleName, description: "", course: cid as string, lessons: [] } ]);
-    setModuleName("");
-  };
-  const deleteModule = (moduleId: string) => {
-    setModules(modules.filter((m) => m._id !== moduleId));
-  };
-
-  const editModule = (moduleId: string) => {
-    setModules(modules.map((m) => (m._id === moduleId ? { ...m, editing: true } : m)));
-  };
-  const updateModule = (module: any) => {
-    setModules(modules.map((m) => (m._id === module._id ? module : m)));
-  }; */
-  
 
 
   return (
@@ -78,7 +59,7 @@ export default function Modules() {
                     dispatch(deleteModule(moduleId));
                   }}
                   editModule={(moduleId) => dispatch(editModule(moduleId))} />
-                  
+
               </div>
 
               {module.lessons && (

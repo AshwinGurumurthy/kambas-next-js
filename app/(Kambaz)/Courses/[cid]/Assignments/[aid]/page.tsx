@@ -1,12 +1,11 @@
 "use client";
 import { useParams } from "next/navigation";
 import { Form, FormControl, FormLabel, Row ,FormSelect, FormCheck, FormGroup, Col, Card, Button} from "react-bootstrap";
-import * as db from "../../../../Database";
 import Link from "next/link";
 import { RootState } from "../../../../store";
 import { updateAssignment, addAssignment } from "../reducer";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 export default function AssignmentEditor() {
@@ -186,8 +185,11 @@ const canEdit = (currentUser.role === "FACULTY")? false : true;
         </Link>
         <Link href={`/Courses/${cid}/Assignments`}>
         <Button id="wd-save-btn" variant="danger" 
-        onClick={()=> {(aid === "NewAssignment") ? dispatch(addAssignment(assignmentState)) 
-        : dispatch(updateAssignment({ ...assignmentState, _id: aid }))}}>Save</Button>
+        onClick={() =>
+  aid === "NewAssignment"
+    ? dispatch(addAssignment(assignmentState))
+    : dispatch(updateAssignment({ ...assignmentState, _id: aid }))
+}>Save</Button>
         </Link>
       </div>
       

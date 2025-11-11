@@ -1,9 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import * as db from "../Database";
 import { Row, Col, Card, CardImg, CardBody, CardTitle, CardText, Button, FormControl } from "react-bootstrap";
-import { v4 as uuidv4 } from "uuid";
 import { useSelector, useDispatch } from "react-redux";
 import { addNewCourse, updateCourse, deleteCourse } from "../Courses/reducer";
 import { RootState } from "../store";
