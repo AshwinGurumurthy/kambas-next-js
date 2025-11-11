@@ -33,6 +33,10 @@ export default function AssignmentEditor() {
     const [assignmentState, setAssignmentState] = useState<any>(
   aid === "NewAssignment" ? defaultAssignment : assignment
 );
+
+const {currentUser}  = useSelector((state: RootState) => state.accountReducer);
+const canEdit = (currentUser.role === "FACULTY")? false : true;
+
   return (
     <div id="wd-assignments-editor m-4">
       <Form>
@@ -42,7 +46,7 @@ export default function AssignmentEditor() {
         </FormLabel>
         <FormControl className="mb-3" placeholder="Assignment Name" defaultValue={assignment?.title || ""}
         onChange={(e) =>
-                setAssignmentState({ ...assignmentState, title: e.target.value }) }/>
+                setAssignmentState({ ...assignmentState, title: e.target.value }) } disabled={canEdit}/>
         </div>
 
         <div className="mt-3 ">
@@ -55,7 +59,9 @@ export default function AssignmentEditor() {
   onChange = {(e) =>
     setAssignmentState({ ...assignmentState, description: e.target.value }) }
   placeholder="Description"
-  value={assignment?.description || ""}
+  value={assignment?.description || ""
+  }
+  disabled={canEdit}
 
 />
         </div>
@@ -64,7 +70,7 @@ export default function AssignmentEditor() {
           Points
         </FormLabel>
           <FormControl className="me-3" defaultValue={assignment?.points || ""} onChange = {(e)=>
-    setAssignmentState({ ...assignmentState, points: e.target.value })} />
+    setAssignmentState({ ...assignmentState, points: e.target.value })} disabled={canEdit}/>
         </div>
 
         <Row className="d-flex mt-3">
@@ -74,7 +80,7 @@ export default function AssignmentEditor() {
         </FormLabel>
         </Col>
         <Col>
-          <FormSelect>
+          <FormSelect disabled={canEdit}>
         <option value="ASSIGNMENTS" defaultChecked>ASSIGNMENTS</option>
         <option value="QUIZZES">QUIZZES</option>
         <option value="EXAMS">EXAMS</option>
@@ -91,7 +97,7 @@ export default function AssignmentEditor() {
         </FormLabel>
         </Col>
         <Col>
-          <FormSelect>
+          <FormSelect disabled={canEdit}>
         <option value="ASSIGNMENTS" defaultChecked>Percentage</option>
         <option value="QUIZZES">Marks</option>
         <option value="EXAMS">Grades</option>
@@ -106,18 +112,18 @@ export default function AssignmentEditor() {
         <Col sm={8} className="mt-3 align-items-center">
         <Card>
           <FormGroup controlId="submissionType" className="mb-2 p-3 pb-0">
-            <FormSelect defaultValue="Online">
+            <FormSelect defaultValue="Online" disabled={canEdit}>
               <option value="Online">Online</option>
               <option value="Offline">Offline</option>
             </FormSelect>
           </FormGroup>
-      <FormGroup className="align-items-center p-3 pb-4 pt-0">
+      <FormGroup className="align-items-center p-3 pb-4 pt-0" >
       <FormLabel column sm={4}>Online entry options</FormLabel>
-      <FormCheck type="checkbox" label="Text Entry" defaultChecked name="wd-text-entry" id="wd-text-entry"/>
-      <FormCheck type="checkbox" label="Website URL" name="wd-website-url" id="wd-website-url"/>
-      <FormCheck type="checkbox" label="Media Recordings" name="wd-media-recordings" id="wd-media-recordings"/>
-      <FormCheck type="checkbox" label="Student Annotation" name="wd-radio-student-annotation" id="wd-student-annotation"/>
-      <FormCheck type="checkbox" label="File Uploads" name="wd-radio-file-upload" id="wd-file-upload"/>
+      <FormCheck type="checkbox" label="Text Entry" defaultChecked name="wd-text-entry" id="wd-text-entry" disabled = {canEdit}/>
+      <FormCheck type="checkbox" label="Website URL" name="wd-website-url" id="wd-website-url" disabled = {canEdit}/>
+      <FormCheck type="checkbox" label="Media Recordings" name="wd-media-recordings" id="wd-media-recordings" disabled = {canEdit}/>
+      <FormCheck type="checkbox" label="Student Annotation" name="wd-radio-student-annotation" id="wd-student-annotation" disabled = {canEdit}/>
+      <FormCheck type="checkbox" label="File Uploads" name="wd-radio-file-upload" id="wd-file-upload" disabled = {canEdit}/>
       </FormGroup>
       </Card>
       </Col>
@@ -139,7 +145,7 @@ export default function AssignmentEditor() {
                   <FormLabel>Assign to</FormLabel>
                   </Col>
                   <Col >
-                  <FormSelect defaultValue="Everyone">
+                  <FormSelect defaultValue="Everyone" disabled = {canEdit}>
                     <option value="Everyone">Everyone</option>
                   </FormSelect>
                   </Col>
@@ -150,7 +156,7 @@ export default function AssignmentEditor() {
                 </FormLabel>
                 <FormControl type="date" defaultValue={assignment?.dueDate || ""}
                 onChange = {(e)=>
-    setAssignmentState({ ...assignmentState, dueDate: e.target.value })} />
+    setAssignmentState({ ...assignmentState, dueDate: e.target.value })} disabled={canEdit}/>
               </Col>
               <Col>
 
@@ -159,12 +165,12 @@ export default function AssignmentEditor() {
                   Available from
                 </FormLabel>
                 <FormControl type="date" className="me-5" defaultValue={assignment?.availFrom || ""}  onChange = {(e)=>
-    setAssignmentState({ ...assignmentState, availFrom: e.target.value })} />
+    setAssignmentState({ ...assignmentState, availFrom: e.target.value })} disabled={canEdit}/>
                 <FormLabel column sm={1} className="">
                   Until
                 </FormLabel>
                 <FormControl type="date" defaultValue={assignment?.dueDate || ""} onChange = {(e)=>
-    setAssignmentState({ ...assignmentState, dueDate: e.target.value })} />
+    setAssignmentState({ ...assignmentState, dueDate: e.target.value })} disabled={canEdit}/>
               </div>
 
               </Col>

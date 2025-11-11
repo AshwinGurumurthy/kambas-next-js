@@ -81,15 +81,12 @@ export default function Assignments() {
               <BsGripVertical className="fs-4" />
               <LuNotebookPen className="text-success me-3 fs-4" />
               <div>
-                {isFaculty ? (
+                
               <Link
                   href={`/Courses/${cid}/Assignments/${assignment._id}`}
                   className="wd-assignment-link text-decoration-none text-dark fw-bold">
                   <h5 className="mb-0">{assignment.title}</h5>
               </Link>
-                ) :
-                ( <h5 className="mb-0">{assignment.title}</h5>
-                )}
                 
               <div>
               <span className = "text-danger">Multiple Modules </span>| <span className = "text-muted fw-bold">Not available until </span> {assignment.availFrom} at {assignment.availFromTime} |
