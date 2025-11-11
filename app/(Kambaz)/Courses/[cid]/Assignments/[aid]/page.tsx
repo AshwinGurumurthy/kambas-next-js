@@ -24,10 +24,11 @@ export default function AssignmentEditor() {
     "dueTime": "23:59pm" 
   };
 
+  const foundAssignment = useSelector((state: RootState) => 
+    state.assignmentsReducer.assignments.find((assignment: any) => aid === assignment._id));
   const assignment = (aid === "NewAssignment")
     ? defaultAssignment
-    : useSelector((state: RootState) =>
-  state.assignmentsReducer.assignments.find((assignment: any) => aid === assignment._id));
+    : foundAssignment;
 
     const [assignmentState, setAssignmentState] = useState<any>(
   aid === "NewAssignment" ? defaultAssignment : assignment
