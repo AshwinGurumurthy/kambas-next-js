@@ -18,7 +18,7 @@ export default function Dashboard() {
   const { courses } = useSelector((state: RootState) => state.coursesReducer);
   const {currentUser } = useSelector((state: RootState) => state.accountReducer);
   const { enrollments } = useSelector((state: RootState) => state.enrollmentsReducer);
-  const [showAll, setShowAll] = useState(true);
+  const [showAll, setShowAll] = useState(false);
   //const [showGo,toggleShowGo] = useState(true);
   const dispatch = useDispatch();
 
@@ -73,17 +73,18 @@ const onUnenrollToCourse = async (courseId: string) => {
 ));
 };
 
-  useEffect(() => {
-    fetchCourses();
-}, [showAll, currentUser, enrollments]); 
+ useEffect(() => {
+  fetchCourses();
+}, [showAll, currentUser]);
+
 
 useEffect(() => {
-  const load = async () => {
-    const data = await client.findCoursesForEnrolledUser(currentUser._id);
-    dispatch(setEnrollments(data));
+  const loadEnrollments = async () => {
+    if (!currentUser?._id) return;
+    const data = await client.findEnrollmentsForUser(currentUser._id);
+dispatch(setEnrollments(data));
   };
-
-  if (currentUser?._id) load();
+  loadEnrollments();
 }, [currentUser]);
 
   return (

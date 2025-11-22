@@ -110,6 +110,11 @@ export const unenrollUserFromCourse = async (userId: string, courseId: string) =
   return response.data;
 };
 
+export const findEnrollmentsForUser = async (userId: string) => {
+  const response = await axios.get(`${USERS_API}/${userId}/enrollments`);
+  return response.data;
+};
+
 
 
 
