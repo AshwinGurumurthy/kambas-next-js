@@ -10,8 +10,10 @@ import { LuNotebookPen } from "react-icons/lu";
 import { useParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store";
-import { deleteAssignment } from "./reducer";
-
+//import { deleteAssignment } from "./reducer";
+import * as client from "../../client";
+import { setAssignments } from "./reducer";
+import { /*use,*/ useEffect } from "react";
 export default function Assignments() {
   const { cid } = useParams();
   const assignments = useSelector((state: RootState) => state.assignmentsReducer.assignments);
@@ -19,9 +21,29 @@ export default function Assignments() {
   const isFaculty = currentUser?.role === "FACULTY";
   const dispatch = useDispatch();
 
-  const handleDelete = (assignment:any) => {
+  
+
+const fetchAssignments = async () => {
+  try {
+  const assignments = await client.findAssignments(cid as string);
+  dispatch(setAssignments(assignments));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+useEffect(() => {
+  fetchAssignments();
+}, [currentUser]);
+
+const onDeleteAssignment = async (assignmentId: string) => {
+    const status = await client.deleteAssignment(assignmentId);
+    fetchAssignments();
+}
+
+const handleDelete = (assignment:any) => {
   if (window.confirm(`Are you sure you want to delete "${assignment.title}"?`)) {
-      dispatch(deleteAssignment(assignment._id));
+      onDeleteAssignment(assignment._id);
     }
 };
 
@@ -68,9 +90,7 @@ export default function Assignments() {
         </div>
         <ListGroupItem />
 
-        {assignments.filter((assignment) => assignment.course === cid)
-        .map((assignment) => (
-
+        {assignments.map((assignment) => (
         <ListGroupItem key ={assignment._id} className="wd-assignment-status-border p-2">
           <div className="d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center">

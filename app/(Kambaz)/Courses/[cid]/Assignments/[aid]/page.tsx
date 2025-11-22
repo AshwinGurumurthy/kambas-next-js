@@ -6,7 +6,7 @@ import { RootState } from "../../../../store";
 import { updateAssignment, addAssignment } from "../reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-
+import * as client from "../../../client";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
@@ -26,6 +26,7 @@ export default function AssignmentEditor() {
 
   const foundAssignment = useSelector((state: RootState) => 
     state.assignmentsReducer.assignments.find((assignment: any) => aid === assignment._id));
+
   const assignment = (aid === "NewAssignment")
     ? defaultAssignment
     : foundAssignment;
@@ -37,6 +38,18 @@ export default function AssignmentEditor() {
 const {currentUser}  = useSelector((state: RootState) => state.accountReducer);
 const canEdit = (currentUser.role === "FACULTY")? false : true;
 
+const onCreateAssignment = async () => {
+  const newAssignment = await client.createAssignment(assignmentState);
+  dispatch(addAssignment(newAssignment));
+};
+
+const onUpdateAssignment = async () => {
+  const updatedAssignment = await client.updateAssignment(assignmentState);
+  dispatch(updateAssignment(updatedAssignment));
+}
+
+
+
   return (
     <div id="wd-assignments-editor m-4">
       <Form>
@@ -44,7 +57,7 @@ const canEdit = (currentUser.role === "FACULTY")? false : true;
         <FormLabel>
           Assignment Name
         </FormLabel>
-        <FormControl className="mb-3" placeholder="Assignment Name" defaultValue={assignment?.title || ""}
+        <FormControl className="mb-3" placeholder="Assignment Name" defaultValue={assignmentState?.title || ""}
         onChange={(e) =>
                 setAssignmentState({ ...assignmentState, title: e.target.value }) } disabled={canEdit}/>
         </div>
@@ -59,7 +72,7 @@ const canEdit = (currentUser.role === "FACULTY")? false : true;
   onChange = {(e) =>
     setAssignmentState({ ...assignmentState, description: e.target.value }) }
   placeholder="Description"
-  value={assignment?.description || ""
+  value={assignmentState?.description || ""
   }
   disabled={canEdit}
 
@@ -69,7 +82,7 @@ const canEdit = (currentUser.role === "FACULTY")? false : true;
           <FormLabel column sm={2}>
           Points
         </FormLabel>
-          <FormControl className="me-3" defaultValue={assignment?.points || ""} onChange = {(e)=>
+          <FormControl className="me-3" defaultValue={assignmentState?.points || ""} onChange = {(e)=>
     setAssignmentState({ ...assignmentState, points: e.target.value })} disabled={canEdit}/>
         </div>
 
@@ -154,7 +167,7 @@ const canEdit = (currentUser.role === "FACULTY")? false : true;
                 <FormLabel column sm={2}>
                   Due
                 </FormLabel>
-                <FormControl type="date" defaultValue={assignment?.dueDate || ""}
+                <FormControl type="date" defaultValue={assignmentState?.dueDate || ""}
                 onChange = {(e)=>
     setAssignmentState({ ...assignmentState, dueDate: e.target.value })} disabled={canEdit}/>
               </Col>
@@ -164,12 +177,12 @@ const canEdit = (currentUser.role === "FACULTY")? false : true;
                 <FormLabel column sm={2}>
                   Available from
                 </FormLabel>
-                <FormControl type="date" className="me-5" defaultValue={assignment?.availFrom || ""}  onChange = {(e)=>
+                <FormControl type="date" className="me-5" defaultValue={assignmentState?.availFrom || ""}  onChange = {(e)=>
     setAssignmentState({ ...assignmentState, availFrom: e.target.value })} disabled={canEdit}/>
                 <FormLabel column sm={1} className="">
                   Until
                 </FormLabel>
-                <FormControl type="date" defaultValue={assignment?.dueDate || ""} onChange = {(e)=>
+                <FormControl type="date" defaultValue={assignmentState?.dueDate || ""} onChange = {(e)=>
     setAssignmentState({ ...assignmentState, dueDate: e.target.value })} disabled={canEdit}/>
               </div>
 
@@ -188,8 +201,8 @@ const canEdit = (currentUser.role === "FACULTY")? false : true;
         <Button id="wd-save-btn" variant="danger" 
         onClick={() =>
   aid === "NewAssignment"
-    ? dispatch(addAssignment(assignmentState))
-    : dispatch(updateAssignment({ ...assignmentState, _id: aid }))
+    ? onCreateAssignment()
+    : onUpdateAssignment()
 }>Save</Button>
         </Link>
       </div>
