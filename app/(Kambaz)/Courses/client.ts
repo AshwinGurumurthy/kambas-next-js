@@ -86,15 +86,27 @@ export const updateAssignment = async (assignment: any) => {
   return response.data;
 };
 
+export const findCoursesForEnrolledUser = async (userId: string) => {
+  const response = await axios.get(`${USERS_API}/${userId}/courses`);
+  return response.data;
+};
+
+export const findAllCourses = async () => {
+  const response = await axios.get(`${COURSES_API}`);
+  return response.data;
+}
+
 export const enrollUserInCourse = async (userId: string, courseId: string) => {
-  const response = await axios.post(ENROLLMENTS_API, { userId, courseId });
+  const response = await axiosWithCredentials.post(
+    `${COURSES_API}/${courseId}/enroll`
+  );
   return response.data;
 };
 
 export const unenrollUserFromCourse = async (userId: string, courseId: string) => {
-  const response = await axios.delete(ENROLLMENTS_API, {
-    data: { userId, courseId }
-  });
+  const response = await axiosWithCredentials.delete(
+    `${COURSES_API}/${courseId}/unenroll`
+  );
   return response.data;
 };
 
