@@ -19,7 +19,7 @@ export default function Dashboard() {
   const {currentUser } = useSelector((state: RootState) => state.accountReducer);
   const { enrollments } = useSelector((state: RootState) => state.enrollmentsReducer);
   const [showAll, setShowAll] = useState(false);
-  //const [showGo,toggleShowGo] = useState(true);
+  const [showGo,toggleShowGo] = useState(true);
   const dispatch = useDispatch();
 
    const fetchCourses = async () => {
@@ -86,6 +86,10 @@ dispatch(setEnrollments(data));
   };
   loadEnrollments();
 }, [currentUser]);
+
+useEffect(() => {
+  toggleShowGo(!showAll);
+}, [showAll]);
 
   return (
     <div id="wd-dashboard">
@@ -165,7 +169,7 @@ dispatch(setEnrollments(data));
             >
               {course.description}
             </CardText>
-           {/* {showGo && <Button variant="primary">Go</Button>} */}
+            {showGo && <Button variant="primary">Go</Button>}
           </Link>
 
         {showAll && (
