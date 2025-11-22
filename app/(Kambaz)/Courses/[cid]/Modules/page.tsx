@@ -37,8 +37,8 @@ export default function Modules() {
   if (!cid) return;
   const courseId = Array.isArray(cid) ? cid[0] : cid;
   const newModule = { name: moduleName, course: courseId };
-  const module = await client.createModuleForCourse(courseId, newModule);
-  dispatch(setModules([...modules, module]));
+  const createdModule = await client.createModuleForCourse(courseId, newModule);
+dispatch(setModules([...modules, createdModule]));
 };
 
 const onUpdateModule = async (module: any) => {
