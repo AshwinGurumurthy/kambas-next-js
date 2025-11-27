@@ -189,7 +189,7 @@ useEffect(() => {
 )}
 
 
-          <button className="btn btn-danger"
+          <button className="btn btn-danger float-end"
             onClick={(event) => {
               event.preventDefault();
               onDeleteCourse(course._id);
