@@ -80,9 +80,9 @@ const onUpdateModule = async (module: any) => {
                     defaultValue={module.name} />
                 )}
                
-      <ModuleControlButtons moduleId={module._id}
+      {currentUser?.role!="STUDENT" && <ModuleControlButtons moduleId={module._id}
                   deleteModule={(moduleId) => onRemoveModule(moduleId)}
-                  editModule={(moduleId) => dispatch(editModule(moduleId))} />
+                  editModule={(moduleId) => dispatch(editModule(moduleId))} /> }
 
               </div>
 
