@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Row, Col, Card, CardImg, CardBody, CardTitle, CardText, Button, FormControl } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { addNewCourse, updateCourse, deleteCourse,setCourses, } from "../Courses/reducer";
+import { addNewCourse, updateCourse, deleteCourse,setCourses } from "../Courses/reducer";
 import { RootState } from "../store";
 import { addEnrollment, deleteEnrollment, setEnrollments } from "./Enrollments/reducer";
 import * as client from "../Courses/client";
@@ -62,12 +62,12 @@ export default function Dashboard() {
   
 
 const onEnrollToCourse = async (courseId: string) => {
-  const enrollment = await client.enrollUserInCourse(currentUser._id, courseId);
+  const enrollment = await client.enrollIntoCourse(currentUser._id, courseId);
   dispatch(setEnrollments([ ...enrollments, enrollment ]));
 };
 
 const onUnenrollToCourse = async (courseId: string) => {
-  await client.unenrollUserFromCourse(currentUser._id, courseId);
+  await client.unenrollFromCourse(currentUser._id, courseId);
   dispatch(setEnrollments(
   enrollments.filter((e) => e.course !== courseId)
 ));
@@ -81,7 +81,7 @@ const onUnenrollToCourse = async (courseId: string) => {
 useEffect(() => {
   const loadEnrollments = async () => {
     if (!currentUser?._id) return;
-    const data = await client.findEnrollmentsForUser(currentUser._id);
+    const data = await client.findCoursesForEnrolledUser(currentUser._id);
 dispatch(setEnrollments(data));
   };
   loadEnrollments();
