@@ -96,7 +96,9 @@ useEffect(() => {
   <h1 id="wd-dashboard-title">Dashboard</h1>
   <hr />
 
-  <div className="d-flex justify-content-between align-items-center p-1">
+  
+
+  {currentUser?.role!="STUDENT" && <div className="d-flex justify-content-between align-items-center p-1">
     <h5>New Course</h5>
 
     <div className="d-flex gap-2">
@@ -124,7 +126,7 @@ useEffect(() => {
 
     </div>
   </div>
-
+     }
          
 
 
@@ -134,8 +136,6 @@ useEffect(() => {
              onChange={(e) => setCourse({ ...course, description: e.target.value }) } />
 
       <hr />
-
-
       <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
@@ -189,15 +189,16 @@ useEffect(() => {
 )}
 
 
-          <button className="btn btn-danger float-end"
+          { currentUser?.role!="STUDENT" && <button className="btn btn-danger float-end"
             onClick={(event) => {
               event.preventDefault();
               onDeleteCourse(course._id);
             }} >
       Delete
-    </button>
+    </button> }
 
 
+          { currentUser?.role!="STUDENT" &&
           <Button
             id="wd-edit-course-click"
             onClick={(event) => {
@@ -207,7 +208,7 @@ useEffect(() => {
             className="btn btn-warning me-2 float-end"
           >
             Edit
-          </Button>
+          </Button> }
         </CardBody>
       </Card>
     </Col>
