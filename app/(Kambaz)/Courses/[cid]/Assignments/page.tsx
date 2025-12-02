@@ -114,7 +114,7 @@ const handleDelete = (assignment:any) => {
             
             </div>
               <div className="d-flex align-items-center ms-3">
-          <FaTrash className="text-danger me-4 fs-4" onClick={() => handleDelete(assignment)}/>   
+          {currentUser!="STUDENT" && <FaTrash className="text-danger me-4 fs-4" onClick={() => handleDelete(assignment)}/> }
           <FaCheckCircle className="text-success me-3 fs-4" />
           <BsThreeDotsVertical className="text-muted me-3 fs-4" />
         </div>
