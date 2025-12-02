@@ -50,7 +50,7 @@ const onUpdateModule = async (module: any) => {
   
   return (
     <div className="p-4">
-      {currentUser!="STUDENT" && <ModulesControls setModuleName={setModuleName} moduleName={moduleName} addModule={onCreateModuleForCourse} />}
+      {currentUser?.role!="STUDENT" && <ModulesControls setModuleName={setModuleName} moduleName={moduleName} addModule={onCreateModuleForCourse} />}
 
       <br /><br /><br /><br />
       <ListGroup id="wd-modules" className="rounded-0">
