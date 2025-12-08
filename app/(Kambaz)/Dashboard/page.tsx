@@ -106,46 +106,41 @@ useEffect(() => {
   <h1 id="wd-dashboard-title">Dashboard</h1>
   <hr />
 
-  <div className="d-flex justify-content-between align-items-center p-1">
-    <h5>New Course</h5>
+  
 
-    <div className="d-flex gap-2">
-     {<button
-        className="btn btn-primary"
-        id="wd-enrollments-click"
-        onClick={() => setShowAll(!showAll)}
-      >
-        Enrollments
-      </button> }
+  {currentUser?.role!="STUDENT" && <><div className="d-flex justify-content-between align-items-center p-1">
+        <h5>New Course</h5>
 
-      <button
-        className="btn btn-primary"
-        id="wd-add-new-course-click"
-        onClick={onAddNewCourse}
-      >
-        Add
-      </button>
+        <div className="d-flex gap-2">
+          {<button
+            className="btn btn-primary"
+            id="wd-enrollments-click"
+            onClick={() => setShowAll(!showAll)}
+          >
+            Enrollments
+          </button>}
 
-      
-
-      <button onClick={onUpdateCourse} className="btn btn-secondary float-end" id="wd-update-course-click" >
-        Update
-      </button>
-
-    </div>
-  </div>
-
-         
+          <button
+            className="btn btn-primary"
+            id="wd-add-new-course-click"
+            onClick={onAddNewCourse}
+          >
+            Add
+          </button>
 
 
-      <FormControl value={course.name} className="mb-2"
-             onChange={(e) => setCourse({ ...course, name: e.target.value }) } />
-      <FormControl as="textarea" value={course.description} rows={3}
-             onChange={(e) => setCourse({ ...course, description: e.target.value }) } />
 
+          <button onClick={onUpdateCourse} className="btn btn-secondary float-end" id="wd-update-course-click">
+            Update
+          </button>
+
+        </div>
+      </div><FormControl value={course.name} className="mb-2"
+        onChange={(e) => setCourse({ ...course, name: e.target.value })} /><FormControl as="textarea" value={course.description} rows={3}
+          onChange={(e) => setCourse({ ...course, description: e.target.value })} /></>
+         }
       <hr />
-
-
+      
       <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
@@ -199,15 +194,16 @@ useEffect(() => {
 )}
 
 
-          <button className="btn btn-danger float-end"
+          { currentUser?.role!="STUDENT" && <button className="btn btn-danger float-end"
             onClick={(event) => {
               event.preventDefault();
               onDeleteCourse(course._id);
             }} >
       Delete
-    </button>
+    </button> }
 
 
+          { currentUser?.role!="STUDENT" &&
           <Button
             id="wd-edit-course-click"
             onClick={(event) => {
@@ -217,7 +213,7 @@ useEffect(() => {
             className="btn btn-warning me-2 float-end"
           >
             Edit
-          </Button>
+          </Button> }
         </CardBody>
       </Card>
     </Col>

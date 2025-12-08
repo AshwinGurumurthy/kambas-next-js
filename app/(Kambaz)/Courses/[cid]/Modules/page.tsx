@@ -18,7 +18,8 @@ export default function Modules() {
   const [moduleName, setModuleName] = useState("");
   const { modules } = useSelector((state: RootState) => state.modulesReducer);
   const dispatch = useDispatch();
-  const role = useSelector((state: RootState) => state.accountReducer.currentUser.role);
+  const {currentUser}  = useSelector((state: RootState) => state.accountReducer);
+
   /*const fetchModules = async () => {
     const modules = await client.findModulesForCourse(cid as string);
     dispatch(setModules(modules));
@@ -50,13 +51,10 @@ const onUpdateModule = async (module: any) => {
     const newModules = modules.map((m: any) => m._id === module._id ? module : m );
     dispatch(setModules(newModules));
   };
-
-
-
   
   return (
     <div className="p-4">
-      {role!="STUDENT" && <ModulesControls setModuleName={setModuleName} moduleName={moduleName} addModule={onCreateModuleForCourse} />}
+      {currentUser?.role!="STUDENT" && <ModulesControls setModuleName={setModuleName} moduleName={moduleName} addModule={onCreateModuleForCourse} />}
 
       <br /><br /><br /><br />
       <ListGroup id="wd-modules" className="rounded-0">
@@ -86,9 +84,9 @@ const onUpdateModule = async (module: any) => {
                     defaultValue={module.name} />
                 )}
                
-      <ModuleControlButtons moduleId={module._id}
+      {currentUser?.role!="STUDENT" && <ModuleControlButtons moduleId={module._id}
                   deleteModule={(moduleId) => onRemoveModule(moduleId)}
-                  editModule={(moduleId) => dispatch(editModule(moduleId))} />
+                  editModule={(moduleId) => dispatch(editModule(moduleId))} /> }
 
               </div>
 
