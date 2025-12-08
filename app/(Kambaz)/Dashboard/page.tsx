@@ -14,6 +14,21 @@ export default function Dashboard() {
     startDate: "2023-09-10", endDate: "2023-12-15",
     image: "/reactjs.jpg", description: "New Description"
   });
+  
+  const courseImageMap: { [key: string]: string } = {
+    "RS101": "Rocket-Propulsion.jpg",
+    "RS102": "Aerodynamics.jpg",
+    "RS103": "Spacecraft-design.jpg",
+    "RS104": "Organic-Chemistry.jpg",
+    "RS105": "Inorganic-Chemistry.png",
+    "RS106": "Physical-Chemistry.webp",
+    "RS107": "AncientLanguages.jpg",
+    "RS108": "Wizards.png",
+  };
+
+  const getImageForCourse = (courseId: string) => {
+    return courseImageMap[courseId] || "reactjs.jpg";
+  };
 
   const { courses } = useSelector((state: RootState) => state.coursesReducer);
   const {currentUser } = useSelector((state: RootState) => state.accountReducer);
@@ -154,7 +169,7 @@ useEffect(() => {
               }
             }}*/
           >
-            <CardImg src={`/images/${course.image}`} variant="top" width="100%" height={160} />
+            <CardImg src={`/images/${getImageForCourse(course._id)}`} variant="top" width="100%" height={160} />
             <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
               {course.name}
             </CardTitle>
