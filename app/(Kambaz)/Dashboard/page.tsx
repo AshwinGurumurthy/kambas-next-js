@@ -62,15 +62,25 @@ export default function Dashboard() {
   
 
 const onEnrollToCourse = async (courseId: string) => {
-  const enrollment = await client.enrollIntoCourse(currentUser._id, courseId);
-  dispatch(setEnrollments([ ...enrollments, enrollment ]));
+  try {
+    await client.enrollIntoCourse(currentUser._id, courseId);
+    const updatedCourses = await client.findCoursesForEnrolledUser(currentUser._id);
+    dispatch(setCourses(updatedCourses));
+    console.log("Successfully enrolled in course:", courseId);
+  } catch (error) {
+    console.error("Failed to enroll in course:", error);
+  }
 };
 
 const onUnenrollToCourse = async (courseId: string) => {
-  await client.unenrollFromCourse(currentUser._id, courseId);
-  dispatch(setEnrollments(
-  enrollments.filter((e) => e.course !== courseId)
-));
+  try {
+    await client.unenrollFromCourse(currentUser._id, courseId);
+    const updatedCourses = await client.findCoursesForEnrolledUser(currentUser._id);
+    dispatch(setCourses(updatedCourses));
+    console.log("Successfully unenrolled from course:", courseId);
+  } catch (error) {
+    console.error("Failed to unenroll from course:", error);
+  }
 };
 
  useEffect(() => {

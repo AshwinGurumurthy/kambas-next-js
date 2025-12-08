@@ -9,6 +9,9 @@ import { FormControl } from "react-bootstrap";
 
 export default function PeopleDetails({ uid, onClose }: { uid: string | null; onClose: () => void; }) {
   const [user, setUser] = useState<any>({});
+  const [name, setName] = useState("");
+  const [editing, setEditing] = useState(false);
+  
   const fetchUser = async () => {
     if (!uid) return;
     const user = await client.findUserById(uid);
@@ -22,9 +25,6 @@ export default function PeopleDetails({ uid, onClose }: { uid: string | null; on
     await client.deleteUser(uid);
     onClose();
   };
-
-  const [name, setName] = useState("");
-  const [editing, setEditing] = useState(false);
   const saveUser = async () => {
     const [firstName, lastName] = name.split(" ");
     const updatedUser = { ...user, firstName, lastName };

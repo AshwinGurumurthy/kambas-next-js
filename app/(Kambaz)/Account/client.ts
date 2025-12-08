@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosWithCredentials = axios.create({ withCredentials: true });
-export const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER;
+export const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER || "http://localhost:4000";
 export const USERS_API = `${HTTP_SERVER}/api/users`;
 
 export const findAllUsers = async () => {
@@ -50,12 +50,12 @@ export const findUsersByPartialName = async (name: string) => {
 };
 
 export const findUserById = async (id: string) => {
-  const response = await axios.get(`${USERS_API}/${id}`);
+  const response = await axiosWithCredentials.get(`${USERS_API}/${id}`);
   return response.data;
 };
 
 export const deleteUser = async (userId: string) => {
-  const response = await axios.delete( `${USERS_API}/${userId}` );
+  const response = await axiosWithCredentials.delete( `${USERS_API}/${userId}` );
   return response.data;
 };
 
