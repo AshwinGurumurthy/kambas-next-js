@@ -20,13 +20,14 @@ export default function Modules() {
   const dispatch = useDispatch();
   const {currentUser}  = useSelector((state: RootState) => state.accountReducer);
 
-  /*const fetchModules = async () => {
+  const fetchModules = async () => {
     const modules = await client.findModulesForCourse(cid as string);
     dispatch(setModules(modules));
   };
+  
   useEffect(() => {
     fetchModules();
-  }, []);*/
+  }, [cid]);
 
   const onRemoveModule = async (moduleId: string) => {
     if (!cid) return;

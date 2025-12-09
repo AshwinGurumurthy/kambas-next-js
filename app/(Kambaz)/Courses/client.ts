@@ -33,7 +33,7 @@ export const updateCourse = async (course: any) => {
 };
 
 export const findModulesForCourse = async (courseId: string) => {
-  const response = await axios
+  const response = await axiosWithCredentials
     .get(`${COURSES_API}/${courseId}/modules`);
   return response.data;
 };
@@ -112,10 +112,10 @@ export const unenrollFromCourse = async (userId: string, courseId: string) => {
 };
 
 
-export const findEnrollmentsForUser = async (userId: string) => {
+/*export const findEnrollmentsForUser = async (userId: string) => {
   const response = await axiosWithCredentials.get(`${USERS_API}/enrollments/${userId}/enrollments`);
   return response.data;
-};
+};*/
 
 export const findUsersForCourse = async (courseId: string) => {
   const response = await axios.get(`${COURSES_API}/${courseId}/users`);

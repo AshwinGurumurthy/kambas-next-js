@@ -93,14 +93,14 @@ const onUnenrollToCourse = async (courseId: string) => {
 }, [showAll, currentUser]);
 
 
-useEffect(() => {
+/* useEffect(() => {
   const loadEnrollments = async () => {
     if (!currentUser?._id) return;
     const data = await client.findEnrollmentsForUser(currentUser._id);
 dispatch(setEnrollments(data));
   };
   loadEnrollments();
-}, [currentUser]);
+}, [currentUser]); */
 
 useEffect(() => {
   toggleShowGo(!showAll);
