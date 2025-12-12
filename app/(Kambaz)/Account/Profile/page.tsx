@@ -29,6 +29,12 @@ const signout = async () => {
  useEffect(() => {
    fetchProfile();
  }, []);
+ const formatDob = (dob: any) => {
+   if (!dob) return "";
+   if (typeof dob === "string") return dob.includes("T") ? dob.split("T")[0] : dob;
+   if (dob instanceof Date && !Number.isNaN(dob.getTime())) return dob.toISOString().split("T")[0];
+   return "";
+ };
  return (
    <div className="wd-profile-screen">
      <h3>Profile</h3>
@@ -47,7 +53,7 @@ const signout = async () => {
            defaultValue={profile.lastName}
            onChange={(e) => setProfile({ ...profile, lastName: e.target.value }) } />
          <FormControl id="wd-dob" className="mb-2" type="date"
-           defaultValue={profile.dob}
+           defaultValue={formatDob((profile as any).dob)}
            onChange={(e) => setProfile({ ...profile, dob: e.target.value })} />
          <FormControl id="wd-email" className="mb-2"
            defaultValue={profile.email}
