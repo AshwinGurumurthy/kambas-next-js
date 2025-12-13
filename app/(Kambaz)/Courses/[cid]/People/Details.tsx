@@ -18,9 +18,17 @@ export default function PeopleDetails({ uid, onClose }: { uid: string | null; on
     setUser(user);
   };
   useEffect(() => {
-    if (uid) fetchUser();
-  }, [uid]);
-  if (!uid) return null;
+  if (!uid) return;
+
+  const loadUser = async () => {
+    const fetchedUser = await client.findUserById(uid);
+    setUser(fetchedUser);
+    setName(`${fetchedUser.firstName} ${fetchedUser.lastName}`);
+  };
+
+  loadUser();
+}, [uid]);
+
   const deleteUser = async (uid: string) => {
     await client.deleteUser(uid);
     onClose();
@@ -43,7 +51,11 @@ export default function PeopleDetails({ uid, onClose }: { uid: string | null; on
 
        <div className="text-danger fs-4">
         {!editing && (
-          <FaPencil onClick={() => setEditing(true)}
+          
+          <FaPencil onClick={() => {
+    setName(`${user.firstName} ${user.lastName}`);
+    setEditing(true);
+  }}
               className="float-end fs-5 mt-2 wd-edit" /> )}
         {editing && (
           <FaCheck onClick={() => saveUser()}
@@ -51,10 +63,11 @@ export default function PeopleDetails({ uid, onClose }: { uid: string | null; on
         {!editing && (
           <div className="wd-name"
                onClick={() => setEditing(true)}>
+      
             {user.firstName} {user.lastName}</div>)}
         {user && editing && (
           <FormControl className="w-50 wd-edit-name"
-            defaultValue={`${user.firstName} ${user.lastName}`}
+            value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") { saveUser(); }}}/>)}
