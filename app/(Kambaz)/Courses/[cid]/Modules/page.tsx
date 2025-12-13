@@ -21,9 +21,13 @@ export default function Modules() {
   const {currentUser}  = useSelector((state: RootState) => state.accountReducer);
 
   const fetchModules = async () => {
-    const modules = await client.findModulesForCourse(cid as string);
-    dispatch(setModules(modules));
-  };
+  const modules = await client.findModulesForCourse(cid as string);
+  dispatch(
+    setModules(
+      modules.map((m: any) => ({ ...m, editing: false }))
+    )
+  );
+};
   
   useEffect(() => {
     fetchModules();
@@ -70,19 +74,20 @@ const onUpdateModule = async (module: any) => {
                 <BsGripVertical className="me-2 fs-3" /> 
                 {!module.editing && module.name}
                 { module.editing && (
-              <FormControl className="w-50 d-inline-block"
-               onChange={(e) =>
-                      dispatch(
-                        updateModule({ ...module, name: e.target.value })
-                      )
-                    }
-               onKeyDown={(e) => {
-                       if (e.key === "Enter") {
-                     onUpdateModule({ ...module, editing: false });
-                }
-
-                    }}
-                    defaultValue={module.name} />
+              <FormControl
+  className="w-50 d-inline-block"
+  value={module.name}
+  onChange={(e) =>
+    dispatch(
+      updateModule({ ...module, name: e.target.value })
+    )
+  }
+  onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      onUpdateModule({ ...module, editing: false });
+    }
+  }}
+/>
                 )}
                
       {currentUser?.role!="STUDENT" && <ModuleControlButtons moduleId={module._id}
