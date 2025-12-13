@@ -31,9 +31,16 @@ export default function Users() {
     }
   };
   const fetchUsers = async () => {
-   const users = await client.findAllUsers();
-   setUsers(users);
+   console.log("fetchUsers called");
+   try {
+     const users = await client.findAllUsers();
+     console.log("users fetched:", users);
+     setUsers(users);
+   } catch (error) {
+     console.error("Error fetching users:", error);
+   }
  };
+ 
   useEffect(() => {
    fetchUsers();
  }, [uid]);

@@ -6,6 +6,7 @@ export const USERS_API = `${HTTP_SERVER}/api/users`;
 
 export const findAllUsers = async () => {
   const response = await axiosWithCredentials.get(USERS_API);
+  console.log("[findAllUsers] response", response.data);
   return response.data;
 };
 
