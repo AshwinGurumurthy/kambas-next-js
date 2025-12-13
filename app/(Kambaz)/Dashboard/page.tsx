@@ -35,6 +35,7 @@ export default function Dashboard() {
   const { enrollments } = useSelector((state: RootState) => state.enrollmentsReducer);
   const [showAll, setShowAll] = useState(false);
   const [showGo,toggleShowGo] = useState(true);
+  const [enrolledCourses, setEnrolledCourses] = useState<any[]>([]);
   const dispatch = useDispatch();
 
    const fetchCourses = async () => {
@@ -57,10 +58,25 @@ export default function Dashboard() {
   }
 };
 
-   const onAddNewCourse = async () => {
-    const newCourse = await client.createCourse(course);
-    dispatch(setCourses([ ...courses, newCourse ]));
+useEffect(() => {
+  if (!currentUser?._id) return;
+
+  const loadEnrolled = async () => {
+    const data = await client.findCoursesForEnrolledUser(currentUser._id);
+    setEnrolledCourses(data);
   };
+
+  loadEnrolled();
+}, [currentUser]);
+
+  const onAddNewCourse = async () => {
+  const newCourse = await client.createCourse(course);
+  dispatch(setCourses([...courses, newCourse]));
+  const updatedEnrolled =
+    await client.findCoursesForEnrolledUser(currentUser._id);
+
+  setEnrolledCourses(updatedEnrolled);
+};
 
   const onDeleteCourse = async (courseId: string) => {
     const status = await client.deleteCourse(courseId);
@@ -77,21 +93,30 @@ export default function Dashboard() {
   
 
 const onEnrollToCourse = async (courseId: string) => {
-  const enrollment = await client.enrollIntoCourse(currentUser._id, courseId);
-  dispatch(setEnrollments([ ...enrollments, enrollment ]));
+  await client.enrollIntoCourse(currentUser._id, courseId);
+  const updated = await client.findCoursesForEnrolledUser(currentUser._id);
+  setEnrolledCourses(updated);
 };
 
 const onUnenrollToCourse = async (courseId: string) => {
   await client.unenrollFromCourse(currentUser._id, courseId);
-  dispatch(setEnrollments(
-  enrollments.filter((e) => e.course !== courseId)
-));
+  setEnrolledCourses(
+    enrolledCourses.filter(c => c._id !== courseId)
+  );
 };
 
  useEffect(() => {
   fetchCourses();
 }, [showAll, currentUser]);
 
+useEffect(() => {
+  const loadEnrollments = async () => {
+    if (!currentUser?._id) return;
+    const data = await client.findCoursesForEnrolledUser(currentUser._id);
+    dispatch(setEnrollments(data));
+  };
+  loadEnrollments();
+}, [currentUser]);
 
 /* useEffect(() => {
   const loadEnrollments = async () => {
@@ -183,11 +208,7 @@ useEffect(() => {
           </Link>
 
         {showAll && (
-  enrollments.some(
-    (enrollment: any) =>
-      enrollment.user === currentUser?._id &&
-      enrollment.course === course._id
-  ) ? (
+  enrolledCourses.some(c => c._id === course._id) ? (
     <Button className="btn-danger" onClick={() => onUnenrollToCourse(course._id)}>
       Unenroll
     </Button>

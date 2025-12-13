@@ -78,7 +78,7 @@ export default function PeopleDetails({ uid, onClose }: { uid: string | null; on
       <b>Section:</b>         <span className="wd-section">       {user.section}      </span> <br />
       <b>Total Activity:</b>  <span className="wd-total-activity">{user.totalActivity}</span> 
       <hr />
-       <button onClick={() => deleteUser(uid)} className="btn btn-danger float-end wd-delete" > Delete </button>
+       <button onClick={() => uid && deleteUser(uid)} className="btn btn-danger float-end wd-delete" > Delete </button>
       <button onClick={onClose}
               className="btn btn-secondary float-end me-2 wd-cancel" > Cancel </button>
 
