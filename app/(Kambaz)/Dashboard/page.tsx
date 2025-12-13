@@ -113,7 +113,7 @@ useEffect(() => {
 
   
 
-  {currentUser?.role!="STUDENT" && <><div className="d-flex justify-content-between align-items-center p-1">
+  {(currentUser?.role === "FACULTY" || currentUser?.role === "ADMIN") && <><div className="d-flex justify-content-between align-items-center p-1">
         <h5>New Course</h5>
 
         <div className="d-flex gap-2">
@@ -199,7 +199,7 @@ useEffect(() => {
 )}
 
 
-          { currentUser?.role!="STUDENT" && <button className="btn btn-danger float-end"
+          { (currentUser?.role === "FACULTY" || currentUser?.role === "ADMIN") && <button className="btn btn-danger float-end"
             onClick={(event) => {
               event.preventDefault();
               onDeleteCourse(course._id);
@@ -208,7 +208,7 @@ useEffect(() => {
     </button> }
 
 
-          { currentUser?.role!="STUDENT" &&
+          { (currentUser?.role === "FACULTY" || currentUser?.role === "ADMIN") &&
           <Button
             id="wd-edit-course-click"
             onClick={(event) => {

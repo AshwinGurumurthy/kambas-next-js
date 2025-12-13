@@ -18,7 +18,7 @@ export default function Signup() {
        const signup = async () => {
                const currentUser = await client.signup(user);
                dispatch(setCurrentUser(currentUser));
-               redirect("/Profile");
+               redirect("Profile");
   };
 
   return (
@@ -41,7 +41,7 @@ export default function Signup() {
              className="mb-2"
 />
 
-      <Link  id="wd-signup-btn" href="Profile" className="btn btn-primary w-100 mb-2"> Sign up </Link>
+      <button  id="wd-signup-btn" className="btn btn-primary w-100 mb-2" onClick={signup}> Sign up </button>
       <Link  id="wd-signin-btn" href="Signin" className="btn btn-primary w-100 mb-2"> Sign in </Link>
     </div>
 );
