@@ -32,10 +32,10 @@ export async function getAllInstructors() {
 }
 
 export async function getInstructorsForCourse(courseId: string) {
-    const { data: instructors } = await axiosWithCredentials.get(
-        `${USERS_API}/instructors/${courseId}`
+    const { data: users } = await axiosWithCredentials.get(
+        `${HTTP_SERVER}/api/courses/${courseId}/users`
     );
-    return instructors;
+    return users.filter((u: any) => u.role === "FACULTY");
 }
 
 export async function getEveryone() {
