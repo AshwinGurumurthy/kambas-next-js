@@ -1,127 +1,212 @@
+"use client";
+import { useParams } from "next/navigation";
+import { Form, FormControl, FormLabel, Row ,FormSelect, FormCheck, FormGroup, Col, Card, Button} from "react-bootstrap";
+import Link from "next/link";
+import { RootState } from "../../../../store";
+import { updateAssignment, addAssignment } from "../reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import * as client from "../../../client";
+
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const dispatch = useDispatch();
+
+  const defaultAssignment =  {
+    "_id": "N0", 
+    "title": "", 
+    "description": "", 
+    "course": cid, 
+    "points": 100, 
+    "availFrom": "2024-05-20",
+    "availFromTime": "12:00am",  
+    "dueDate": "2024-05-27", 
+    "dueTime": "23:59pm" 
+  };
+
+  const foundAssignment = useSelector((state: RootState) => 
+    state.assignmentsReducer.assignments.find((assignment: any) => aid === assignment._id));
+
+  const assignment = (aid === "NewAssignment")
+    ? defaultAssignment
+    : foundAssignment;
+
+    const [assignmentState, setAssignmentState] = useState<any>(
+  aid === "NewAssignment" ? defaultAssignment : assignment
+);
+
+const {currentUser}  = useSelector((state: RootState) => state.accountReducer);
+const canEdit = (currentUser.role === "FACULTY")? false : true;
+
+const onCreateAssignment = async () => {
+  const newAssignment = await client.createAssignment(assignmentState);
+  dispatch(addAssignment(newAssignment));
+};
+
+const onUpdateAssignment = async () => {
+  const updatedAssignment = await client.updateAssignment(assignmentState);
+  dispatch(updateAssignment(updatedAssignment));
+}
+
+
+
   return (
-    <div id="wd-assignments-editor">
-      <label htmlFor="wd-name">Assignment Name</label>
-      <input id="wd-name" defaultValue="A1 - ENV + HTML" /><br /><br />
-      <textarea
-        id="wd-description"
-        defaultValue="The assignment is available online Submit a link to the landing page of"
-      />
-      <br />
-      <table>
-        <tbody>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-points">Points</label>
-            </td>
-            <td>
-              <input id="wd-points" defaultValue={100} />
-            </td>
-          </tr>
+    <div id="wd-assignments-editor m-4">
+      <Form>
+        <div className="mt-3"> 
+        <FormLabel>
+          Assignment Name
+        </FormLabel>
+        <FormControl className="mb-3" placeholder="Assignment Name" defaultValue={assignmentState?.title || ""}
+        onChange={(e) =>
+                setAssignmentState({ ...assignmentState, title: e.target.value }) } disabled={canEdit}/>
+        </div>
 
-          <tr>
-            <td align="right">
-              <label htmlFor="wd-group">Assignment Group</label>
-            </td>
-            <td>
-              <select id="wd-group" defaultValue="ASSIGNMENTS">
-                <option>ASSIGNMENTS</option>
-                <option>QUIZZES</option>
-                <option>EXAMS</option>
-                <option>PROJECT</option>
-              </select>
-            </td>
-          </tr>
+        <div className="mt-3 ">
+        <FormLabel>
+          Description
+        </FormLabel>
+        <FormControl
+  as="textarea"
+  rows={6}
+  onChange = {(e) =>
+    setAssignmentState({ ...assignmentState, description: e.target.value }) }
+  placeholder="Description"
+  value={assignmentState?.description || ""
+  }
+  disabled={canEdit}
 
+/>
+        </div>
+        <div className="d-flex mt-3">
+          <FormLabel column sm={2}>
+          Points
+        </FormLabel>
+          <FormControl className="me-3" defaultValue={assignmentState?.points || ""} onChange = {(e)=>
+    setAssignmentState({ ...assignmentState, points: e.target.value })} disabled={canEdit}/>
+        </div>
 
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-display-grade-as">Display Grade As</label>
-            </td>
-            <td>
-              <select id="wd-display-grade-as" defaultValue="Percentage">
-               <option>Percentage</option>
-                <option>Marks</option>
-                <option>Grades</option>
-               </select>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-submission-type">Submission Type</label>
-            </td>
-            <td>
-               <select id="wd-submission-type" defaultValue="Online">
-               <option value="Online">Online</option>
-               <option value="Offline">Offline</option>
-               </select>
-            </td>
-          </tr>
+        <Row className="d-flex mt-3">
+          <Col sm={2}>
+          <FormLabel>
+          Assignment Group
+        </FormLabel>
+        </Col>
+        <Col>
+          <FormSelect disabled={canEdit}>
+        <option value="ASSIGNMENTS" defaultChecked>ASSIGNMENTS</option>
+        <option value="QUIZZES">QUIZZES</option>
+        <option value="EXAMS">EXAMS</option>
+        <option value="PROJECT">PROJECT</option>
+        </FormSelect>
+        </Col>
 
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-text-entry">Online entry options</label>
-            </td>
-            <td>
+        </Row>
 
-<input type="radio" name="radio-text-entry" id="wd-text-entry"/>
-<label htmlFor="wd-text-entry">Text Entry</label><br />
+        <Row className="d-flex mt-3">
+          <Col sm={2}>
+          <FormLabel>
+          Display Grade As
+        </FormLabel>
+        </Col>
+        <Col>
+          <FormSelect disabled={canEdit}>
+        <option value="ASSIGNMENTS" defaultChecked>Percentage</option>
+        <option value="QUIZZES">Marks</option>
+        <option value="EXAMS">Grades</option>
+        </FormSelect>
+        </Col>
+        </Row>
 
-<input type="radio" name="radio-website-url" id="wd-website-url"/>
-<label htmlFor="wd-website-url">Webite URL</label><br />
+         <Row className="align-items-center">
+          <Col sm={2}>
+          <FormLabel>Submission Type</FormLabel>
+          </Col>
+        <Col sm={8} className="mt-3 align-items-center">
+        <Card>
+          <FormGroup controlId="submissionType" className="mb-2 p-3 pb-0">
+            <FormSelect defaultValue="Online" disabled={canEdit}>
+              <option value="Online">Online</option>
+              <option value="Offline">Offline</option>
+            </FormSelect>
+          </FormGroup>
+      <FormGroup className="align-items-center p-3 pb-4 pt-0" >
+      <FormLabel column sm={4}>Online entry options</FormLabel>
+      <FormCheck type="checkbox" label="Text Entry" defaultChecked name="wd-text-entry" id="wd-text-entry" disabled = {canEdit}/>
+      <FormCheck type="checkbox" label="Website URL" name="wd-website-url" id="wd-website-url" disabled = {canEdit}/>
+      <FormCheck type="checkbox" label="Media Recordings" name="wd-media-recordings" id="wd-media-recordings" disabled = {canEdit}/>
+      <FormCheck type="checkbox" label="Student Annotation" name="wd-radio-student-annotation" id="wd-student-annotation" disabled = {canEdit}/>
+      <FormCheck type="checkbox" label="File Uploads" name="wd-radio-file-upload" id="wd-file-upload" disabled = {canEdit}/>
+      </FormGroup>
+      </Card>
+      </Col>
+        
+      </Row>
 
-<input type="radio" name="radio-media-recordings" id="wd-media-recordings"/>
-<label htmlFor="wd-radio-scifi">Media Recordings</label><br />
+   <div className="d-flex mt-3 mb-3">
+    <Col sm={2}>
 
-<input type="radio" name="radio-student-annotation" id="wd-student-annotation"/>
-<label htmlFor="wd-radio-student-annotation">Student Annotation</label><br/>
+    <FormLabel>
+        Assign
+    </FormLabel>
 
-<input type="radio" name="radio-file-upload" id="wd-file-upload"/>
-<label htmlFor="wd-radio-file-upload">File Uploads</label>
+    </Col>
+      <Col sm={10}>
+        <Card>
+          <Card.Body>
+            <Col sm={2}>     
+                  <FormLabel>Assign to</FormLabel>
+                  </Col>
+                  <Col >
+                  <FormSelect defaultValue="Everyone" disabled = {canEdit}>
+                    <option value="Everyone">Everyone</option>
+                  </FormSelect>
+                  </Col>
 
-            </td>
-          </tr>
+              <Col className="mb-3">
+                <FormLabel column sm={2}>
+                  Due
+                </FormLabel>
+                <FormControl type="date" defaultValue={assignmentState?.dueDate || ""}
+                onChange = {(e)=>
+    setAssignmentState({ ...assignmentState, dueDate: e.target.value })} disabled={canEdit}/>
+              </Col>
+              <Col>
 
-           <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-assign-to">Assign to</label>
-            </td>
-            <td>
-               <select id="wd-wd-assign-to-everyone" defaultValue="Everyone">
-               <option value="Everyone">Everyone</option>
-               </select>
-            </td>
-          </tr>
+              <div className="d-flex">
+                <FormLabel column sm={2}>
+                  Available from
+                </FormLabel>
+                <FormControl type="date" className="me-5" defaultValue={assignmentState?.availFrom || ""}  onChange = {(e)=>
+    setAssignmentState({ ...assignmentState, availFrom: e.target.value })} disabled={canEdit}/>
+                <FormLabel column sm={1} className="">
+                  Until
+                </FormLabel>
+                <FormControl type="date" defaultValue={assignmentState?.dueDate || ""} onChange = {(e)=>
+    setAssignmentState({ ...assignmentState, dueDate: e.target.value })} disabled={canEdit}/>
+              </div>
 
-          <tr>
-              <td align="right" valign="top">
-              <label htmlFor="wd-due-date">Due</label>
-            </td>
-            <td>
-              <input type="date" id="wd-due-date" />
-            </td>
-              
-          </tr>
+              </Col>
+          </Card.Body>
+        </Card>
+      </Col>
 
-          <tr>
-              <td align="right" valign="top">
-              <label htmlFor="wd-available-from">Available from</label>
-            </td>
-              <td>
-              <input type="date" id="wd-available-from" />
-              </td>
-          </tr>
-
-          <tr>
-              <td align="right" valign="top">
-              <label htmlFor="wd-available-until">Until</label>
-            </td>
-            <td>
-              <input type="date" id="wd-available-until" />
-              </td>
-          </tr>
-        </tbody>
-      </table>
+    </div>
+      </Form>
+      <div className="d-flex justify-content-end">
+        <Link href={`/Courses/${cid}/Assignments`}>
+        <Button id="wd-cancel-btn" variant="light" className="border me-2">Cancel</Button>
+        </Link>
+        <Link href={`/Courses/${cid}/Assignments`}>
+        <Button id="wd-save-btn" variant="danger" 
+        onClick={() =>
+  aid === "NewAssignment"
+    ? onCreateAssignment()
+    : onUpdateAssignment()
+}>Save</Button>
+        </Link>
+      </div>
+      
     </div>
   );
 }

@@ -1,23 +1,33 @@
-import { ReactNode } from "react";
+"use client";
+import { ReactNode, useState } from "react";
 import CourseNavigation from "./Navigation"
 import { FaAlignJustify } from "react-icons/fa";
-export default async function CoursesLayout(
-  { children, params }: Readonly<{ children: ReactNode; params: Promise<{ cid: string }> }>) {
- const { cid } = await params;
+import { useSelector } from "react-redux";
+import { useParams } from "next/navigation";
+import { RootState } from "../../store";
+
+export default function CoursesLayout({ children }: { children: ReactNode }) {
+  const params = useParams();
+  const cid = String(params.cid);
+ const { courses } = useSelector((state: RootState) => state.coursesReducer);
+ const course = courses.find((course: any) => course._id === cid);
+ const [courseNav,setCourseNav] = useState(true);
+
  return (
    <div id="wd-courses">
-  <h2 className="text-danger">
-      <FaAlignJustify className="me-4 fs-4 mb-1" />
-      Course {cid} </h2> <hr />
+      <h2 className="text-danger">
+        <FaAlignJustify className="me-4 fs-4 mb-1" onClick={() => setCourseNav(!courseNav)}/>
+        {course?.name}
+      </h2>
+      <hr />
   <div className="d-flex">
     <div className="d-none d-md-block">
-      <CourseNavigation />
+      {courseNav && <CourseNavigation cid={cid} />}
     </div>
     <div className="flex-fill">
       {children}
-    </div></div>
+    </div></div> 
 </div>
-
 
 );}
 

@@ -12,13 +12,10 @@ p#wd-id-selector-2 {
     color: blue
 }
 
-/* wd selector 3 is a descendant of wd selector 1 so we want to select all descendants of wd-selector-1*/
 .wd-selector-1 .wd-selector-3 {
     background-color: red;
     color: white;
 }
-
-/* wd selector2 as 3 as child and wd selector 4 is a child of wd selector 3 so this chain must be followed*/
 
 .wd-selector-2 > .wd-selector-3 > .wd-selector-4 {
     background-color: yellow;

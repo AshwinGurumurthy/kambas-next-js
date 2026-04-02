@@ -18,6 +18,17 @@ export default function Labs() {
            Lab 3: JavaScript Fundamentals </Link>
        </li>
        <li>
+         <Link href="/Labs/Lab4" id="wd-lab4-link">
+          Lab 4: Maintaining State in React Applications </Link>
+       </li>
+
+       <li>
+         <Link href="/Labs/Lab5" id="wd-lab5-link">
+          Lab 5: Maintaining State in React Applications </Link>
+       </li>
+      
+
+       <li>
         Github repsitory:
         <a href="https://github.com/AshwinGurumurthy/kambas-next-js" id="wd-github"> click here</a><br/>
        </li>

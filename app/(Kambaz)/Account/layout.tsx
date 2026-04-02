@@ -1,7 +1,14 @@
+"use client";
 import { ReactNode } from "react";
 import AccountNavigation from "./Navigation";
+import { Provider } from "react-redux";
+import store from "../store";
+import Session from "./Session";
+
 export default function AccountLayout({ children }: Readonly<{ children: ReactNode }>) {
  return (
+  <Provider store={store}>
+    <Session>
    <div id="wd-kambaz">
      <table>
        <tbody>
@@ -16,4 +23,7 @@ export default function AccountLayout({ children }: Readonly<{ children: ReactNo
        </tbody>
      </table>
   </div>
+   </Session>
+  </Provider>
+
 );}
