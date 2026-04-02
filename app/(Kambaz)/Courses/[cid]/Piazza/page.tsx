@@ -1,9 +1,16 @@
+"use client";
+import { useSelector } from "react-redux";
+import { redirect, useParams } from "next/navigation";
+import { RootState } from "@/app/(Kambaz)/store";
+
 export default function Piazza() {
-  
+
   const { currentUser } = useSelector(
-    (state: storeType) => state.accountReducer
+    (state: RootState) => state.accountReducer
   );
-  if (currentUser) return redirect("/Pazza/Class/RS101");
-  else return redirect("/Account/Signin?redirect=/Pazza/Class/RS101");
+  
+  const { cid } = useParams();
+  if (currentUser) return redirect(`/Pazza/Class/${cid}`);
+  else return redirect(`/Account/Signin?redirect=/Pazza/Class/${cid}`);
 
 }
